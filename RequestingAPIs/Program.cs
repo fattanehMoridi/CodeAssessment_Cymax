@@ -20,8 +20,22 @@ namespace RequestingAPIs
             {
                 IHttpClientService httpClientService = new HttpClientService();
                 var getOffer = new GetOffer(httpClientService, request);
-                var result = await getOffer.LowestOffer();
-                Console.WriteLine(result);
+                var taskA = getOffer.FirstOffer();
+                var taskB = getOffer.SecondOffer();
+                var taskC = getOffer.ThirdOffer();
+                decimal[] results = await Task.WhenAll(taskA, taskB, taskC);
+                decimal min = results[0];
+                int offer = 1;
+                for (int i = 1; i < 3; i++)
+                {
+                    decimal price = results[i];
+                    if (price < min)
+                    {
+                        min = price;
+                        offer = i + 1;
+                    }
+                }
+                Console.WriteLine($"Lowest offer is {offer} offer with price of ${min}");
             }
             catch (Exception ex)
             {

@@ -71,12 +71,6 @@ namespace RequestingAPIs.Tests
             var resultThird = await _sut.ThirdOffer();
             Assert.Equal(10, resultThird);
         }
-
-        [Fact]
-        public async Task LowestOfferTest() { 
-        
-        }
-
     }
 
 }

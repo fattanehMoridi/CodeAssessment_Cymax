@@ -66,28 +66,5 @@ namespace RequestingAPIs
                 var doc = XDocument.Parse(result);
                 return decimal.Parse(doc.Descendants("quote").First().Value);
             }
-
-        public async Task<string> LowestOffer() {
-            var taskA = FirstOffer();
-            var taskB = SecondOffer();
-            var taskC = ThirdOffer();
-            decimal[] results = await Task.WhenAll(taskA, taskB, taskC);
-            decimal min = results[0];
-            int offer = 1;
-            for (int i = 1; i < 3; i++)
-            {
-                decimal price = results[i];
-                if (price < min)
-                {
-                    min = price;
-                    offer = i + 1;
-                }
-            }
-            return $"Lowest offer is {offer} offer with price of ${min}";
-
         }
-
-
-        }
-        
 }
